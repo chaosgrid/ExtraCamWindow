@@ -1,7 +1,7 @@
 # ExtraWindowCam Unreal Engine 4 Plugin
 A simple Unreal Engine 4 plugin that allows to have extra game windows with their own camera viewpoints. 
 
-Tested with Unreal Engine 4.12.5
+Tested with and compiled for Unreal Engine 4.12.5
 
 ## Known issues
 
@@ -13,3 +13,5 @@ Tested with Unreal Engine 4.12.5
 ## How to use
 
 This plugin adds a new actor class called "ExtraCamWindowActor" which is derived from CameraActor. To use it, simply put an ExtraCamWindowActor into your scene.  Note that the extra camera window has a serious performance impact as the scene is rendered another time.
+
+<img alt="Customg Settings" src="https://raw.githubusercontent.com/chaosgrid/ExtraCamWindow/master/extraCamWindowPlugin.png" width="400" \>
