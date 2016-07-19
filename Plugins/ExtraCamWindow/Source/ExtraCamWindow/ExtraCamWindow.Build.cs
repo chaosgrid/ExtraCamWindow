@@ -5,7 +5,7 @@ public class ExtraCamWindow : ModuleRules
 {
 	public ExtraCamWindow(TargetInfo Target)
 	{
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore"});
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore", "UMG" });
 
         //Uncomment if you are using online features
         // PrivateDependencyModuleNames.Add("OnlineSubsystem");

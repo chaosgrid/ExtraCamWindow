@@ -10,8 +10,6 @@ AExtraCamWindowActor::AExtraCamWindowActor()
 
 void AExtraCamWindowActor::BeginPlay()
 {
-	Super::BeginPlay();
-
 	if (!ExtraCamWindowEnabled)
 		return;
 
@@ -25,11 +23,8 @@ void AExtraCamWindowActor::BeginPlay()
 		{
 			APlayerController* PlayerController = *Iterator;
 			if (PlayerController && PlayerController->PlayerCameraManager)
-			{
-				POVtemp = PlayerController->PlayerCameraManager->CameraCache.POV;
-
 				CamManager = PlayerController->PlayerCameraManager;
-			}
+			
 		}
 	}
 
@@ -60,7 +55,7 @@ void AExtraCamWindowActor::BeginPlay()
 
 	FSlateApplication::Get().AddWindow(ExtraWindow.ToSharedRef(), true);
 
-	TSharedRef<SOverlay> ViewportOverlayWidgetRef = SNew(SOverlay);
+	ViewportOverlayWidget = SNew(SOverlay);
 
 	TSharedRef<SGameLayerManager> LayerManagerRef = SNew(SGameLayerManager)
 	.SceneViewport(GEngine->GameViewport->GetGameViewport())
@@ -68,7 +63,7 @@ void AExtraCamWindowActor::BeginPlay()
 	.UseScissor(false)
 	.Cursor(CursorInWindow)
 	[
-		ViewportOverlayWidgetRef
+		ViewportOverlayWidget.ToSharedRef()
 	];
 
 	TSharedPtr<SViewport> Viewport = SNew(SViewport)
@@ -116,6 +111,30 @@ void AExtraCamWindowActor::BeginPlay()
 	else
 		StandaloneGame = false;
 
+	// initialize everything before we call base class so that in blueprint beginplay everything is ready
+
+	Super::BeginPlay();
+}
+
+bool AExtraCamWindowActor::AddWidgetToExtraCam(UUserWidget* inWidget, int32 zOrder /* = -1 */)
+{
+	if (ViewportOverlayWidget.IsValid() == false)
+		return false;
+
+	ViewportOverlayWidget->AddSlot(zOrder)
+	[
+		inWidget->TakeWidget()
+	];
+
+	return true;
+}
+
+bool AExtraCamWindowActor::RemoveWidgetFromExtraCam(UUserWidget* inWidget)
+{
+	if (ViewportOverlayWidget.IsValid() == false)
+		return false;
+
+	return ViewportOverlayWidget->RemoveSlot(inWidget->TakeWidget());
 }
 
 void AExtraCamWindowActor::Tick(float delta)
@@ -127,14 +146,7 @@ void AExtraCamWindowActor::Tick(float delta)
 
 	if (LockToPlayerCam)
 	{
-		
-		FSceneViewport* oldViewport = GEngine->GameViewport->GetGameViewport();
-		GEngine->GameViewport->SetViewport(SceneViewport.Get());
-
 		SceneViewport->Draw();
-
-		GEngine->GameViewport->SetViewport(oldViewport);
-
 		return;
 	}
 

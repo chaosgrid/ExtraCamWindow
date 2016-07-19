@@ -8,6 +8,8 @@
 #include "Slate/SGameLayerManager.h"
 #include "Slate/SceneViewport.h"
 
+#include "Runtime/UMG/Public/Blueprint/UserWidget.h"
+
 
 /**
  * The public interface to this module

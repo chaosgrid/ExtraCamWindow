@@ -33,18 +33,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool LockResToMainWindow = false;
 
+	UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")
+	bool AddWidgetToExtraCam(UUserWidget* inWidget, int32 zOrder = -1);
+
+	UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")
+	bool RemoveWidgetFromExtraCam(UUserWidget* inWidget);
+
 private:
 
 	void BeginDestroy() override;
 
-	void BeginPlay();
+	void BeginPlay() override;
 
 	void Tick(float delta) override;
 
 	TSharedPtr<FSceneViewport> SceneViewport = nullptr;
 	TSharedPtr<SWindow> ExtraWindow = nullptr;
-
-	FMinimalViewInfo POVtemp;
+	TSharedPtr<SOverlay> ViewportOverlayWidget = nullptr;
 
 	APlayerCameraManager* CamManager;
 
