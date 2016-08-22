@@ -91,7 +91,7 @@ void AExtraCamWindowActor::BeginPlay()
 	// the window and some stuff gets initialized by ticking slate, otherwise we get a thread-related crash in packaged builds..
 	FSlateApplication::Get().Tick();
 
-	SceneViewport->SetOnSceneViewportResizeDel(FOnSceneViewportResize::CreateLambda([this](auto newViewportSize)
+	SceneViewport->SetOnSceneViewportResizeDel(FOnSceneViewportResize::CreateLambda([this](FVector2D newViewportSize)
 	{
 		if (LockResToMainWindow == false)
 			return;
