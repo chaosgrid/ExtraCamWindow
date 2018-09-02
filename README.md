@@ -16,4 +16,4 @@ This plugin adds a new actor class called "ExtraCamWindowActor" which is derived
 
 The plugin also adds Blueprint functions to add and remove widgets from the extra window viewport (AddWidgetToExtraCam and RemoveWidgetFromExtraCam).
 
-<img alt="Customg Settings" src="https://raw.githubusercontent.com/chaosgrid/ExtraCamWindow/master/extraCamWindowPlugin.png" width="400" \>
+![Customg Settings](https://raw.githubusercontent.com/chaosgrid/ExtraCamWindow/master/extraCamWindowPlugin.png)
