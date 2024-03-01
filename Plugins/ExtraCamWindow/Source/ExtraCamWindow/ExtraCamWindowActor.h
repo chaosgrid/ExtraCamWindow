@@ -2,6 +2,7 @@
 #pragma once
 #include "Engine/SceneCapture2D.h"
 #include "RenderWidget.h"
+#include "Camera/CameraComponent.h"
 #include "ExtraCamWindowActor.generated.h"
 
 UCLASS()
@@ -34,7 +35,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool LockResToMainWindow = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadOnly)
+	UCameraComponent* EditorVisualizer = nullptr;
+
+	UPROPERTY(BlueprintReadWrite)
 	URenderWidget* RenderTargetWidget = nullptr;
 
 	UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")

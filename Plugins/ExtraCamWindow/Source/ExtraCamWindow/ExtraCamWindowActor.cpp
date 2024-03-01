@@ -12,6 +12,9 @@ AExtraCamWindowActor::AExtraCamWindowActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	GetCaptureComponent2D()->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+	EditorVisualizer = CreateDefaultSubobject<UCameraComponent>(TEXT("EditorVisualizer"));
+	EditorVisualizer->bIsEditorOnly = true;
+	EditorVisualizer->SetupAttachment(GetCaptureComponent2D());
 }
 
 
