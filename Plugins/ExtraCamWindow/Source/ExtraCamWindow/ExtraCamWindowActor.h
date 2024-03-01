@@ -1,5 +1,6 @@
 
 #pragma once
+#include "Camera/CameraActor.h"
 
 #include "ExtraCamWindowActor.generated.h"
 
@@ -52,6 +53,7 @@ private:
 	TSharedPtr<SOverlay> ViewportOverlayWidget = nullptr;
 
 	APlayerCameraManager* CamManager;
+	UUserWidget* ExtraCamWidget;
 
 	bool StandaloneGame = false;
 	

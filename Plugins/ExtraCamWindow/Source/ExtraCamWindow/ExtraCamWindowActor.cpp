@@ -1,7 +1,7 @@
 
-#include "IExtraCamWindowPlugin.h"
-
 #include "ExtraCamWindowActor.h"
+#include "IExtraCamWindowPlugin.h"
+#include "GameFramework/PlayerController.h"
 
 AExtraCamWindowActor::AExtraCamWindowActor()
 {
@@ -21,7 +21,7 @@ void AExtraCamWindowActor::BeginPlay()
 	{
 		for (FConstPlayerControllerIterator Iterator = World->GetPlayerControllerIterator(); Iterator; ++Iterator)
 		{
-			APlayerController* PlayerController = *Iterator;
+			APlayerController* PlayerController = Cast<APlayerController>(*Iterator);
 			if (PlayerController && PlayerController->PlayerCameraManager)
 				CamManager = PlayerController->PlayerCameraManager;
 			
@@ -60,7 +60,6 @@ void AExtraCamWindowActor::BeginPlay()
 	TSharedRef<SGameLayerManager> LayerManagerRef = SNew(SGameLayerManager)
 	.SceneViewport(GEngine->GameViewport->GetGameViewport())
 	.Visibility(EVisibility::Visible)
-	.UseScissor(false)
 	.Cursor(CursorInWindow)
 	[
 		ViewportOverlayWidget.ToSharedRef()
@@ -102,7 +101,7 @@ void AExtraCamWindowActor::BeginPlay()
 		GEngine->GameViewport->GetViewportSize(mainViewportSize);
 
 		if (mainViewportSize.X != newViewportSize.X || mainViewportSize.Y != newViewportSize.Y)
-			SceneViewport->ResizeFrame(mainViewportSize.X, mainViewportSize.Y, EWindowMode::Windowed, 0, 0);
+			SceneViewport->ResizeFrame(mainViewportSize.X, mainViewportSize.Y, EWindowMode::Windowed);
 	}));
 
 
