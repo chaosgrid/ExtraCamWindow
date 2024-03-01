@@ -1,10 +1,11 @@
 
 #pragma once
-
+#include "Engine/SceneCapture2D.h"
+#include "RenderWidget.h"
 #include "ExtraCamWindowActor.generated.h"
 
 UCLASS()
-class AExtraCamWindowActor : public ACameraActor
+class AExtraCamWindowActor : public ASceneCapture2D
 {
 	GENERATED_BODY()
 
@@ -33,6 +34,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool LockResToMainWindow = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	URenderWidget* RenderTargetWidget = nullptr;
+
 	UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")
 	bool AddWidgetToExtraCam(UUserWidget* inWidget, int32 zOrder = -1);
 
@@ -50,9 +54,7 @@ private:
 	TSharedPtr<FSceneViewport> SceneViewport = nullptr;
 	TSharedPtr<SWindow> ExtraWindow = nullptr;
 	TSharedPtr<SOverlay> ViewportOverlayWidget = nullptr;
-
-	APlayerCameraManager* CamManager;
-
+	
 	bool StandaloneGame = false;
 	
 };
