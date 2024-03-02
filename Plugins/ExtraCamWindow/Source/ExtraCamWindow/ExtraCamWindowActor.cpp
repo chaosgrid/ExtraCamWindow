@@ -7,6 +7,8 @@
 #include "Kismet/KismetRenderingLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Brushes/SlateImageBrush.h"
+#include "Camera/CameraComponent.h"
+
 
 AExtraCamWindowActor::AExtraCamWindowActor()
 {
@@ -102,6 +104,14 @@ void AExtraCamWindowActor::BeginPlay()
 	RenderTargetWidget = CreateWidget<URenderWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), URenderWidget::StaticClass());
 	RenderTargetWidget->TextureTarget->SetBrushResourceObject(GetCaptureComponent2D()->TextureTarget);
 	AddWidgetToExtraCam(RenderTargetWidget);
+
+	if (bUseEditorVisualizerProperties) {
+		GetCaptureComponent2D()->ProjectionType = EditorVisualizer->ProjectionMode;
+		GetCaptureComponent2D()->FOVAngle = EditorVisualizer->FieldOfView;
+		GetCaptureComponent2D()->OrthoWidth = EditorVisualizer->OrthoWidth;
+		GetCaptureComponent2D()->CustomNearClippingPlane = EditorVisualizer->OrthoNearClipPlane;
+		GetCaptureComponent2D()->PostProcessSettings = EditorVisualizer->PostProcessSettings;
+	}
 	Super::BeginPlay();
 }
 
