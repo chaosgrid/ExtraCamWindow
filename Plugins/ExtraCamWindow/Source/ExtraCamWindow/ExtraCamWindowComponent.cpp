@@ -10,7 +10,8 @@
 #include "Kismet/KismetInputLibrary.h"
 #include "Camera/CameraComponent.h"
 
-UExtraCamWindowComponent::UExtraCamWindowComponent()
+UExtraCamWindowComponent::UExtraCamWindowComponent(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	bTickInEditor = false;

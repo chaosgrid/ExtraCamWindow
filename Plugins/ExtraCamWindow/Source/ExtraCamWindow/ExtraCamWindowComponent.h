@@ -11,45 +11,44 @@
 /**
  * 
  */
-UCLASS(hidecategories = (Collision, Object, Physics, SceneComponent), ClassGroup = Rendering, editinlinenew, meta = (BlueprintSpawnableComponent))
+UCLASS(hidecategories = (Collision, Object, Physics), ClassGroup = (ExtraWindow), editinlinenew, meta = (BlueprintSpawnableComponent))
 class EXTRACAMWINDOW_API UExtraCamWindowComponent : public USceneCaptureComponent2D
 {
-	GENERATED_BODY()
+	GENERATED_UCLASS_BODY()
 public:
-	UExtraCamWindowComponent();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	bool ExtraCamWindowEnabled = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	bool LockToPlayerCam = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	bool LockMouseFocusToExtraWindow = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	TEnumAsByte<EMouseCursor::Type> CursorInWindow = EMouseCursor::None;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	FText WindowTitle = FText::FromString(TEXT("Extra Cam Window"));
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	FVector2D InitialWindowRes = FVector2D(1280, 720);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	bool LockResToMainWindow = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	TEnumAsByte<EWindowMode::Type> WindowMode = EWindowMode::Windowed;
 
 	/** If a reference to a Camera Actor is provided, the Scene Capture Component will use the referenced camera settings for the Capture Component.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow", meta = (ExposeOnSpawn = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	TSoftObjectPtr<ACameraActor> CameraToCopySettings = nullptr;
 
-	UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")
+	UFUNCTION(BlueprintCallable, Category = ExtraCamWindow)
 	bool AddWidgetToExtraCam(UUserWidget* inWidget, int32 zOrder = -1);
 
-	UFUNCTION(BlueprintCallable, Category = "ExtraCamWindow")
+	UFUNCTION(BlueprintCallable, Category = ExtraCamWindow)
 	bool RemoveWidgetFromExtraCam(UUserWidget* inWidget);
 
 private:
@@ -57,7 +56,6 @@ private:
 
 	void OnConstruction(const FTransform& Transform);
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	void BeginDestroy() override;
 
 
