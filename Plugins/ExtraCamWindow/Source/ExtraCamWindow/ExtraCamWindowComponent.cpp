@@ -11,6 +11,7 @@
 #include "Camera/CameraComponent.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Engine/Engine.h"
+#include "ExtraCamViewport.h"
 
 UExtraCamWindowComponent::UExtraCamWindowComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -55,7 +56,7 @@ void UExtraCamWindowComponent::BeginPlay()
 			ViewportOverlayWidget.ToSharedRef()
 		];
 
-	TSharedPtr<SViewport> Viewport = SNew(SViewport)
+	TSharedPtr<SExtraCamViewport> Viewport = SNew(SExtraCamViewport)
 		.RenderDirectlyToWindow(false) // true crashes some stuff because HMDs need the rendertarget tex for distortion etc..
 		.EnableGammaCorrection(false)
 		.EnableStereoRendering(false) // not displaying on an HMD
@@ -64,6 +65,20 @@ void UExtraCamWindowComponent::BeginPlay()
 			LayerManagerRef
 		];
 
+	Viewport->OnWindowModeChanged.AddLambda([this]()
+	{
+		switch (ExtraWindow->GetWindowMode())
+		{
+		case EWindowMode::Windowed:
+			ExtraWindow->SetWindowMode(EWindowMode::WindowedFullscreen);
+			break;
+		case EWindowMode::WindowedFullscreen:
+			ExtraWindow->SetWindowMode(EWindowMode::Windowed);
+			break;
+		default:
+			break;
+		}
+	});
 
 	SceneViewport = MakeShareable(new FSceneViewport(GEngine->GameViewport, Viewport));
 
@@ -74,7 +89,7 @@ void UExtraCamWindowComponent::BeginPlay()
 	ExtraWindow->SetContent(Viewport.ToSharedRef());
 	ExtraWindow->ShowWindow();
 
-
+	
 	SceneViewport->CaptureMouse(LockMouseFocusToExtraWindow);
 	SceneViewport->SetUserFocus(LockMouseFocusToExtraWindow);
 	SceneViewport->LockMouseToViewport(LockMouseFocusToExtraWindow);
@@ -131,7 +146,7 @@ void UExtraCamWindowComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 		}
 	}
 
-	
+	/*
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 
 	if (PlayerController != nullptr)
@@ -152,7 +167,7 @@ void UExtraCamWindowComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 			}
 		}
 		
-	}
+	}*/
 }
 
 bool UExtraCamWindowComponent::AddWidgetToExtraCam(UUserWidget* inWidget, int32 zOrder /* = -1 */)
