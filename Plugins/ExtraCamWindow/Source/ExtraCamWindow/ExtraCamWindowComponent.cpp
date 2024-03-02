@@ -16,6 +16,11 @@ UExtraCamWindowComponent::UExtraCamWindowComponent(const FObjectInitializer& Obj
 	PrimaryComponentTick.bCanEverTick = true;
 	bTickInEditor = false;
 	CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+
+	EditorVisualizer = CreateDefaultSubobject<UCameraComponent>(TEXT("EditorVisualizer"));
+	EditorVisualizer->SetupAttachment(this);
+	EditorVisualizer->bIsEditorOnly = true;
+	EditorVisualizer->SetHiddenInGame(true);
 }
 
 void UExtraCamWindowComponent::BeginPlay()
@@ -103,19 +108,6 @@ void UExtraCamWindowComponent::BeginPlay()
 	RenderTargetWidget->TextureTarget->SetBrushResourceObject(TextureTarget);
 	AddWidgetToExtraCam(RenderTargetWidget);
 
-	GetOwner()->EnableInput(GetWorld()->GetFirstPlayerController());
-
-	if (CameraToCopySettings.Get() != nullptr) {
-		UCameraComponent* CopyCamera = CameraToCopySettings.Get()->GetCameraComponent();
-		if (CameraToCopySettings != nullptr) {
-			ProjectionType = CopyCamera->ProjectionMode;
-			FOVAngle = CopyCamera->FieldOfView;
-			OrthoWidth = CopyCamera->OrthoWidth;
-			CustomNearClippingPlane = CopyCamera->OrthoNearClipPlane;
-			PostProcessSettings = CopyCamera->PostProcessSettings;
-		}
-	}
-
 	Super::BeginPlay();
 }
 
@@ -197,4 +189,14 @@ void UExtraCamWindowComponent::BeginDestroy()
 		else
 			ExtraWindow->DestroyWindowImmediately();
 	}
+}
+
+void UExtraCamWindowComponent::PostEditChangeProperty(FPropertyChangedEvent & PropertyChangedEvent) {
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+
+	EditorVisualizer->SetProjectionMode(ProjectionType);
+	EditorVisualizer->SetFieldOfView(FOVAngle);
+	EditorVisualizer->SetOrthoWidth(OrthoWidth);
+	EditorVisualizer->PostProcessBlendWeight = PostProcessBlendWeight;
+	EditorVisualizer->PostProcessSettings = PostProcessSettings;
 }

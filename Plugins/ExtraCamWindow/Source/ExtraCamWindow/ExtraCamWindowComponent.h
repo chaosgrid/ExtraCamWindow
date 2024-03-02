@@ -41,10 +41,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
 	TEnumAsByte<EWindowMode::Type> WindowMode = EWindowMode::Windowed;
 
-	/** If a reference to a Camera Actor is provided, the Scene Capture Component will use the referenced camera settings for the Capture Component.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExtraCamWindow, meta = (ExposeOnSpawn = "true"))
-	TSoftObjectPtr<ACameraActor> CameraToCopySettings = nullptr;
-
 	UFUNCTION(BlueprintCallable, Category = ExtraCamWindow)
 	bool AddWidgetToExtraCam(UUserWidget* inWidget, int32 zOrder = -1);
 
@@ -57,7 +53,7 @@ private:
 	void OnConstruction(const FTransform& Transform);
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void BeginDestroy() override;
-
+	void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 	TSharedPtr<FSceneViewport> SceneViewport = nullptr;
 	TSharedPtr<SWindow> ExtraWindow = nullptr;
@@ -65,5 +61,6 @@ private:
 
 	bool StandaloneGame = false;
 	URenderWidget* RenderTargetWidget = nullptr;
+	UCameraComponent* EditorVisualizer = nullptr;
 
 };
