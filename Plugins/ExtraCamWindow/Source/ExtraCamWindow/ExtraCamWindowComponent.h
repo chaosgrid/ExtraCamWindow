@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS(hidecategories = (Collision, Object, Physics), ClassGroup = (ExtraWindow), editinlinenew, meta = (BlueprintSpawnableComponent))
+UCLASS(hidecategories = (Collision, Object, Physics), ClassGroup = "ExtraCamWindow", editinlinenew, meta = (BlueprintSpawnableComponent), Blueprintable)
 class EXTRACAMWINDOW_API UExtraCamWindowComponent : public USceneCaptureComponent2D
 {
 	GENERATED_UCLASS_BODY()
