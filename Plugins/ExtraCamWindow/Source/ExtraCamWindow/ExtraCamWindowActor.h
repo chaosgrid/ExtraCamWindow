@@ -13,9 +13,6 @@ public:
 
 	UPROPERTY(Category = Components, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UExtraCamWindowComponent> ExtraCamComponent;
-
-	UCameraComponent* EditorVisualizer = nullptr;
 private:
 	
-	void OnConstruction(const FTransform& Transform);
 };
