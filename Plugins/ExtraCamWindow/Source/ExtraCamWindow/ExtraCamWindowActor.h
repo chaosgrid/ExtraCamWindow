@@ -38,6 +38,9 @@ public:
 	/** If OnBeginPlay the Scene Capture Component should use the Editor Visualizer Camera Properties, such as Camera Settings and Post Process Settings*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow")
 	bool bUseEditorVisualizerProperties = false;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ExtraCamWindow")
+	TEnumAsByte<EWindowMode::Type> WindowMode = EWindowMode::Windowed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ExtraCamWindow")
 	UCameraComponent* EditorVisualizer = nullptr;
