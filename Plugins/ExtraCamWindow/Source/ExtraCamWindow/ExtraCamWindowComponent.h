@@ -53,7 +53,9 @@ private:
 	void OnConstruction(const FTransform& Transform);
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void BeginDestroy() override;
+#if WITH_EDITOR
 	void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif
 
 	TSharedPtr<FSceneViewport> SceneViewport = nullptr;
 	TSharedPtr<SWindow> ExtraWindow = nullptr;

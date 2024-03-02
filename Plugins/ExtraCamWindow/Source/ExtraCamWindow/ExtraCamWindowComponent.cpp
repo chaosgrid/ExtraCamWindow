@@ -9,6 +9,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Kismet/KismetInputLibrary.h"
 #include "Camera/CameraComponent.h"
+#include "Framework/Application/SlateApplication.h"
+#include "Engine/Engine.h"
 
 UExtraCamWindowComponent::UExtraCamWindowComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -191,6 +193,7 @@ void UExtraCamWindowComponent::BeginDestroy()
 	}
 }
 
+#if WITH_EDITOR
 void UExtraCamWindowComponent::PostEditChangeProperty(FPropertyChangedEvent & PropertyChangedEvent) {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 
@@ -200,3 +203,4 @@ void UExtraCamWindowComponent::PostEditChangeProperty(FPropertyChangedEvent & Pr
 	EditorVisualizer->PostProcessBlendWeight = PostProcessBlendWeight;
 	EditorVisualizer->PostProcessSettings = PostProcessSettings;
 }
+#endif
