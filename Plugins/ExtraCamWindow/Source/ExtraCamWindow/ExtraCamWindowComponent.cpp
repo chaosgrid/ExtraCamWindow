@@ -145,29 +145,6 @@ void UExtraCamWindowComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 			SetWorldLocationAndRotation(camLoc, camRot);
 		}
 	}
-
-	/*
-	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-
-	if (PlayerController != nullptr)
-	{
-		if (PlayerController->WasInputKeyJustPressed(EKeys::Enter)) {
-			if (UKismetInputLibrary::ModifierKeysState_IsShiftDown(UKismetInputLibrary::GetModifierKeysState())) {
-				switch (ExtraWindow->GetWindowMode())
-				{
-				case EWindowMode::Windowed:
-					ExtraWindow->SetWindowMode(EWindowMode::WindowedFullscreen);
-					break;
-				case EWindowMode::WindowedFullscreen:
-					ExtraWindow->SetWindowMode(EWindowMode::Windowed);
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		
-	}*/
 }
 
 bool UExtraCamWindowComponent::AddWidgetToExtraCam(UUserWidget* inWidget, int32 zOrder /* = -1 */)
