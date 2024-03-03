@@ -206,6 +206,7 @@ void UExtraCamWindowComponent::BeginDestroy()
 		else
 			ExtraWindow->DestroyWindowImmediately();
 	}
+	RenderTargetWidget = nullptr;
 }
 
 #if WITH_EDITOR
